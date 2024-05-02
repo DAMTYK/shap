@@ -169,7 +169,10 @@ class TFDeep(Explainer):
         if not self.multi_output:
             self.phi_symbolics = [None]
         else:
-            noutputs = self.model_output.shape.as_list()[1]
+            if type(self.model_output) == tuple:
+                noutputs = list(self.model_output.shape)[1]
+            else:
+                noutputs = self.model_output.shape.as_list()[1]
             if noutputs is not None:
                 self.phi_symbolics = [None for i in range(noutputs)]
             else:
